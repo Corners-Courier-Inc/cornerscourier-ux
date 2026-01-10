@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
           <html>
             <head></head>
             <body>
-              <h2>New Cnotact Form</h2>
+              <h2>New Contact Form</h2>
               <p><strong>Name:</strong> ${name}</p>
               <p><strong>Email:</strong> ${email}</p>
               <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
