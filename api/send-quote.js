@@ -26,6 +26,9 @@ module.exports = async (req, res) => {
     const pickupAddress = `${pickup_street_address}, ${pickup_city}, ${pickup_state} ${pickup_zip}`;
     const deliveryAddress = `${delivery_street_address}, ${delivery_city}, ${delivery_state} ${delivery_zip}`;
 
+    // Format distance text
+    const distanceText = !isNaN(parseFloat(distance)) ? `${distance} miles` : distance;
+
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -58,7 +61,7 @@ module.exports = async (req, res) => {
               <h3>Routing</h3>
               <p><strong>Pickup Address:</strong><br>${pickupAddress}</p>
               <p><strong>Delivery Address:</strong><br>${deliveryAddress}</p>
-              <p><strong>Estimated Distance:</strong> ${distance} miles</p>
+              <p><strong>Estimated Distance:</strong> ${distanceText}</p>
             </body>
           </html>
         `,
