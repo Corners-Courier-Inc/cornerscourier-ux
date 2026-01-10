@@ -1,0 +1,102 @@
+:root {
+  --primary-color: #002d59; /* Dark Blue */
+  --accent-color: #B8860B; /* DarkGoldenRod */
+  --light-text-color: #fff;
+  --dark-text-color: #002d59;
+}
+
+/* Base styles for the entire project */
+
+body {
+  background-color: var(--primary-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+header {
+  background-color: var(--accent-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-link {
+  color: var(--primary-color);
+  display: inline-block;
+  padding: 10px 0;
+}
+
+.header-link:hover {
+  color: var(--light-text-color);
+  border-bottom: 2px solid var(--light-text-color);
+}
+
+.header-link-active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--light-text-color);
+}
+
+.header-quote-button {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  border: none;
+  box-shadow: none;
+}
+
+.common-cta-primary {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+}
+
+.quote-button {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+}
+
+.quote-button-active-home {
+  background-color: var(--light-text-color);
+  color: var(--primary-color);
+}
+
+.mobile-menu-button-svg {
+  color: var(--primary-color);
+}
+
+#mobile-menu {
+  background-color: var(--accent-color);
+}
+
+#mobile-menu a {
+  color: var(--primary-color);
+  display: block; /* Explicitly make each link a block element */
+  padding: 10px 0; /* Add padding for better spacing */
+}
+
+footer {
+  background-color: var(--accent-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* To remove extra space below images */
+}
+
+footer p, footer a {
+  color: var(--dark-text-color); /* Dark blue text for footer paragraphs and links */
+}
+
+.bg-golden {
+  background-color: #FFD700; /* Gold color */
+  color: #333; /* Darker text for contrast */
+}
+
+

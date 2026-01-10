@@ -1,0 +1,34 @@
+@import url('base.css');
+
+.about-compliance-title {
+  color: #002d59;
+}
+
+.main-section {
+  background-color: #002d59;
+  color: white;
+}
+
+.facts-title {
+  color: #002d59;
+}
+
+.compliance-title {
+  color: #002d59;
+}
+
+.section-title {
+  color: #dca24b; /* Golden/orange color for the title */
+  text-shadow: 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000; /* Consistent with other titles */
+}
+
+.cta-primary {
+  background-color: #dca24b; /* Primary color */
+  color: #002d59; /* Dark text for contrast */
+}
+
+.cta-secondary {
+  border-color: #dca24b; /* Border with primary color */
+  color: #dca24b; /* Primary color text */
+  background-color: transparent; /* No background fill */
+}
