@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
         sender: { name, email: senderEmail },
         to: [{ email: recipientEmail }],
         replyTo: { email, name },
-        subject: `New Quote Request from Website: ${service_type}`,
+        subject: `New Quote Request-CornersCourier: ${service_type}`,
         htmlContent: `
           <html>
             <body style="font-family: sans-serif; line-height: 1.5;">
