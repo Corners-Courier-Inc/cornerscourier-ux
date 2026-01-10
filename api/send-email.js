@@ -1,11 +1,3 @@
-// This function will be triggered when a user submits the contact form.
-// It sends an email using the Brevo API.
-
-// Make sure to set these environment variables in your Vercel project settings:
-// BREVO_API_KEY: Your Brevo API key.
-// RECIPIENT_EMAIL: The email address where you want to receive the quotes.
-// SENDER_EMAIL: An authenticated email address from your Brevo account.
-
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method Not Allowed" });
@@ -46,12 +38,12 @@ module.exports = async (req, res) => {
             email: email,
             name: name
         },
-        subject: `New Quote Request: ${subject}`,
+        subject: `New Message from Website: ${subject}`,
         htmlContent: `
           <html>
             <head></head>
             <body>
-              <h2>New Quote Request</h2>
+              <h2>New Cnotact Form</h2>
               <p><strong>Name:</strong> ${name}</p>
               <p><strong>Email:</strong> ${email}</p>
               <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
