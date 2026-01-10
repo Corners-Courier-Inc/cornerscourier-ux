@@ -6,16 +6,14 @@
 // RECIPIENT_EMAIL: The email address where you want to receive the quotes.
 // SENDER_EMAIL: An authenticated email address from your Brevo account.
 
-exports.handler = async function(event, context) {
-  if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: "Method Not Allowed" }),
-    };
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    res.status(405).json({ message: "Method Not Allowed" });
+    return;
   }
 
   try {
-    const { name, email, phone, subject, message } = JSON.parse(event.body);
+    const { name, email, phone, subject, message } = req.body;
 
     const brevoApiKey = process.env.BREVO_API_KEY;
     const recipientEmail = process.env.RECIPIENT_EMAIL;
@@ -23,10 +21,8 @@ exports.handler = async function(event, context) {
 
     if (!brevoApiKey || !recipientEmail || !senderEmail) {
       console.error("Missing environment variables");
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ message: "Server configuration error." }),
-      };
+      res.status(500).json({ message: "Server configuration error." });
+      return;
     }
 
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
@@ -38,7 +34,7 @@ exports.handler = async function(event, context) {
       },
       body: JSON.stringify({
         sender: {
-          name: name, // Using the sender's name from the form for Brevo's sender.name
+          name: name,
           email: senderEmail,
         },
         to: [
@@ -47,7 +43,7 @@ exports.handler = async function(event, context) {
           },
         ],
         replyTo: {
-            email: email, // Set the reply-to to the user's email
+            email: email,
             name: name
         },
         subject: `New Quote Request: ${subject}`,
@@ -72,22 +68,14 @@ exports.handler = async function(event, context) {
     if (!response.ok) {
       const errorBody = await response.json();
       console.error("Brevo API error:", errorBody);
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ message: "Failed to send message.", error: errorBody }),
-      };
+      res.status(response.status).json({ message: "Failed to send message.", error: errorBody });
+      return;
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Message sent successfully!" }),
-    };
+    res.status(200).json({ message: "Message sent successfully!" });
 
   } catch (error) {
     console.error("Error handling form submission:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: "An error occurred while processing your request." }),
-    };
+    res.status(500).json({ message: "An error occurred while processing your request." });
   }
 };
