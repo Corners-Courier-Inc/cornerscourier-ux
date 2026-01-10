@@ -1,0 +1,5 @@
+User-agent: *                                                               
+Disallow: /draft/                                                           
+Disallow: /temp/                                                            
+                                                                            
+Sitemap: https://www.cornerscourier.com/sitemap.xml

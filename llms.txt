@@ -1,0 +1,13 @@
+# Allow LLM crawlers to index and cite factual content
+User-Agent: *
+Allow: /
+
+Disallow: /thank-you
+
+# Preferred pages to cite
+Sitemap: https://www.cornerscourier.com/sitemap.xml
+
+# Specific directives for Google-Extended
+User-Agent: Google-Extended
+Disallow: /payment.html
+Disallow: /thank-you.html
