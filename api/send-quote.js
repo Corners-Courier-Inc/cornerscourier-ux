@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
       name, email, phone, service_type, other_service_description,
       dimensions, pickup_street_address, pickup_city, pickup_state, pickup_zip,
       delivery_street_address, delivery_city, delivery_state, delivery_zip,
-      message
+      message, distance
     } = req.body;
 
     const brevoApiKey = process.env.BREVO_API_KEY;
@@ -58,6 +58,7 @@ module.exports = async (req, res) => {
               <h3>Routing</h3>
               <p><strong>Pickup Address:</strong><br>${pickupAddress}</p>
               <p><strong>Delivery Address:</strong><br>${deliveryAddress}</p>
+              <p><strong>Estimated Distance:</strong> ${distance} miles</p>
             </body>
           </html>
         `,
