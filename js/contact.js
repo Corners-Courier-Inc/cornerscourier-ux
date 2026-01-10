@@ -1,51 +1,40 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const trackingId = urlParams.get('trackingId');
-    if (trackingId) {
-        const subjectInput = document.querySelector('input[name="subject"]');
-        if (subjectInput) {
-            subjectInput.value = `Tracking ID: ${trackingId}`;
-        }
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent default form submission
 
-    if (window.location.hash === '#contact') {
-        const contactFormSection = document.getElementById('contact');
-        if (contactFormSection) {
-            contactFormSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
+      const formData = new FormData(contactForm);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
 
-    const contactForm = document.querySelector('#contact form'); // Select the form inside the #contact div
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function (event) {
-            event.preventDefault(); // Prevent default form submission
+      // Simple client-side validation
+      if (!data.name || !data.email || !data.subject || !data.message) {
+        alert('Please fill in all required fields.');
+        return;
+      }
 
-            const form = event.target;
-            const formData = new FormData(form);
-            const formspreeEndpoint = form.action;
-
-            try {
-                const response = await fetch(formspreeEndpoint, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json' // Important for Formspree AJAX submission
-                    }
-                });
-
-                if (response.ok) {
-                    // On successful submission to Formspree, redirect to thank-you page
-                    window.location.href = '/thank-you'; // Changed to /thank-you
-                } else {
-                    // Handle Formspree errors (e.g., rate limiting, invalid fields)
-                    const errorData = await response.json();
-                    console.error('Formspree submission error:', errorData);
-                    alert('There was an error submitting your form. Please try again.');
-                }
-            } catch (error) {
-                console.error('Network or other error:', error);
-                alert('There was a problem connecting to the server. Please check your internet connection and try again.');
-            }
+      try {
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         });
-    }
+
+        if (response.ok) {
+          window.location.href = '/thank-you.html'; // Redirect on success
+        } else {
+          const errorData = await response.json();
+          alert(`Failed to send message: ${errorData.message || 'Unknown error'}`);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An unexpected error occurred. Please try again later.');
+      }
+    });
+  }
 });
