@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', async (event) => {
       event.preventDefault(); // Prevent default form submission
 
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.disabled = true;
+      submitButton.innerHTML = 'Sending...';
+
       const formData = new FormData(contactForm);
       const data = {};
       formData.forEach((value, key) => {
@@ -13,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Simple client-side validation
       if (!data.name || !data.email || !data.subject || !data.message) {
         alert('Please fill in all required fields.');
+        submitButton.disabled = false; // Re-enable button on validation failure
+        submitButton.innerHTML = originalButtonText;
         return;
       }
 
@@ -30,10 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           const errorData = await response.json();
           alert(`Failed to send message: ${errorData.message || 'Unknown error'}`);
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalButtonText;
         }
       } catch (error) {
         console.error('Error submitting form:', error);
         alert('An unexpected error occurred. Please try again later.');
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonText;
       }
     });
   }
