@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
             email: email,
             name: name
         },
-        subject: `New Message from Website: ${subject}`,
+        subject: `New Messag-CornersCourier: ${subject}`,
         htmlContent: `
           <html>
             <head></head>
