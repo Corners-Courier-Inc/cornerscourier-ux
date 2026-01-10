@@ -27,6 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = Object.fromEntries(formData.entries());
             data.distance = document.getElementById('distance').textContent;
 
+            // Client-side validation for distance
+            if (data.distance === '--') {
+                alert('Please select valid pickup and delivery addresses from the autocomplete suggestions to calculate the estimated distance.');
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+                return;
+            }
+
             try {
                 const response = await fetch('/api/send-quote', {
                     method: 'POST',
