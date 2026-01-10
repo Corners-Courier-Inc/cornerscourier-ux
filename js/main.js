@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
         quoteForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
+            const submitButton = quoteForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Submitting...';
+
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData.entries());
             data.distance = document.getElementById('distance').textContent;
@@ -36,10 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     const errorData = await response.json();
                     alert(`Failed to send quote request: ${errorData.message || 'Unknown error'}`);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
                 }
             } catch (error) {
                 console.error('Error submitting quote form:', error);
                 alert('An unexpected error occurred. Please try again.');
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
             }
         });
 
