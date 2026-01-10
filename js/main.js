@@ -15,6 +15,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const quoteForm = document.getElementById('quote-form');
     if (quoteForm) {
+
+        // Helper function to geocode an address string using Nominatim
+        const geocodeAddress = async (address) => {
+            const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=${encodeURIComponent(address)}`;
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                if (data && data.length > 0) {
+                    return {
+                        lat: parseFloat(data[0].lat),
+                        lon: parseFloat(data[0].lon)
+                    };
+                }
+                return null;
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                return null;
+            }
+        };
+
+        // Helper function to calculate distance
+        const calculateHaversineDistance = (coords1, coords2) => {
+            const toRad = (value) => (value * Math.PI) / 180;
+            const R = 3958.8; // miles
+            const dLat = toRad(coords2.lat - coords1.lat);
+            const dLon = toRad(coords2.lon - coords1.lon);
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(coords1.lat)) * Math.cos(toRad(coords2.lat)) * Math.sin(dLon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return (R * c).toFixed(2);
+        };
+
         quoteForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -25,15 +56,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData.entries());
-            data.distance = document.getElementById('distance').textContent;
+            let distance = document.getElementById('distance').textContent;
 
-            // Client-side validation for distance
-            if (data.distance === '--') {
-                alert('Please select valid pickup and delivery addresses from the autocomplete suggestions to calculate the estimated distance.');
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalButtonText;
-                return;
+            // If distance wasn't calculated via autocomplete, try to calculate it now
+            if (distance === '--') {
+                submitButton.innerHTML = 'Calculating Distance...';
+                const pickupAddress = `${data.pickup_street_address}, ${data.pickup_city}, ${data.pickup_state} ${data.pickup_zip}`;
+                const deliveryAddress = `${data.delivery_street_address}, ${data.delivery_city}, ${data.delivery_state} ${data.delivery_zip}`;
+
+                const [pickupCoords, dropoffCoords] = await Promise.all([
+                    geocodeAddress(pickupAddress),
+                    geocodeAddress(deliveryAddress)
+                ]);
+
+                if (pickupCoords && dropoffCoords) {
+                    distance = calculateHaversineDistance(pickupCoords, dropoffCoords);
+                    document.getElementById('distance').textContent = distance; // Update display
+                } else {
+                    distance = 'Could not calculate'; // Set fallback text instead of blocking
+                }
             }
+            
+            data.distance = distance;
+            submitButton.innerHTML = 'Submitting...';
 
             try {
                 const response = await fetch('/api/send-quote', {
