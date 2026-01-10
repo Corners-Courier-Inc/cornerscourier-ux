@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData.entries());
+            data.distance = document.getElementById('distance').textContent;
 
             try {
                 const response = await fetch('/api/send-quote', {
