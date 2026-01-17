@@ -1,5 +1,5 @@
 .same-day-hero-bg {
-  background-image: url('../images/ond10.webp');
+  background-image: url('../images/hero-sameday.webp');
 }
 .tag-primary-accent {
   background-color: var(--accent-color);
@@ -10,7 +10,7 @@
   text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #ccc, 3px 3px 0 #ccc;
 }
 .medical-hero-bg {
-  background-image: url('../images/img5.webp');
+  background-image: url('../images/medical3.webp');
 }
 .environmental-hero-bg {
   background-image: url('../images/hero-env.webp');
