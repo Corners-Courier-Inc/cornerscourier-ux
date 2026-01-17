@@ -6,48 +6,49 @@ RewriteEngine On
 Options -MultiViews
 
 # -----------------------------------------------------
-# 1) Canonical: force HTTPS + WWW
+# 1) Force HTTPS + WWW (CANONICAL)
 # -----------------------------------------------------
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\.cornerscourier\.com$ [NC]
 RewriteRule ^(.*)$ https://www.cornerscourier.com/$1 [R=301,L]
 
 # -----------------------------------------------------
-# 2) Extensionless URLs (SEO-safe)
+# 2) Redirect .html → clean URL (EXTERNAL)
 # -----------------------------------------------------
 
-# a) Redirect /index.html → /
+# index.html → /
 RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
 RewriteRule ^index\.html$ https://www.cornerscourier.com/ [R=301,L]
 
-# b) Redirect all .html → clean URL (ABSOLUTE)
+# any-page.html → /any-page
 RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
 RewriteCond %1 !^index$ [NC]
 RewriteRule ^ https://www.cornerscourier.com/%1 [R=301,L]
 
-# c) Internally serve extensionless from .html
+# -----------------------------------------------------
+# 3) INTERNAL rewrite: clean URL → .html file
+# -----------------------------------------------------
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
 
 # -----------------------------------------------------
-# 3) Legacy redirects
+# 4) Legacy redirects
 # -----------------------------------------------------
 RewriteRule ^about-us/?$ https://www.cornerscourier.com/about [R=301,L]
 RewriteRule ^schedule-delivery/?$ https://www.cornerscourier.com/contact [R=301,L]
 
 # -----------------------------------------------------
-# 4) Custom Error Pages
+# 5) Custom Error Pages
 # -----------------------------------------------------
 ErrorDocument 404 /404.html
 ErrorDocument 500 /500.html
 
 # -----------------------------------------------------
-# 5) Security Headers + CSP
+# 6) Security Headers
 # -----------------------------------------------------
 <IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; upgrade-insecure-requests; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://maps.googleapis.com https://maps.gstatic.com; connect-src 'self' https://maps.googleapis.com https://maps.gstatic.com"
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set X-XSS-Protection "1; mode=block"
@@ -56,14 +57,14 @@ ErrorDocument 500 /500.html
 </IfModule>
 
 # -----------------------------------------------------
-# 6) Compression
+# 7) Compression
 # -----------------------------------------------------
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
 </IfModule>
 
 # -----------------------------------------------------
-# 7) Browser caching
+# 8) Browser caching
 # -----------------------------------------------------
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -75,12 +76,11 @@ ErrorDocument 500 /500.html
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType text/css   "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType application/json      "access plus 1 month"
   ExpiresDefault "access plus 1 week"
 </IfModule>
 
 # -----------------------------------------------------
-# 8) Forbid access to sensitive files
+# 9) Block sensitive files
 # -----------------------------------------------------
 <FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist|meta|orig|json|md)|~)$">
   Require all denied
