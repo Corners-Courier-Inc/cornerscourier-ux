@@ -1,8 +1,10 @@
+User-agent: Googlebot
+Allow: /
+
 User-agent: *
 Disallow: /draft/
 Disallow: /temp/
 
-# AI Crawlers
 User-agent: CCBot
 Disallow: /
 
