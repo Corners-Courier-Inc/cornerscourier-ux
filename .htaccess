@@ -1,6 +1,7 @@
 # =========================
 # Corners Courier .htaccess
 # =========================
+RewriteRule ^test-rewrite$ services.html [L]
 
 RewriteEngine On
 Options -MultiViews
