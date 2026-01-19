@@ -1,21 +1,21 @@
 {
-  "cleanUrls": true,
-  "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/:path*.html",
-      "destination": "/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/:path*.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/service-areas", "destination": "/service-areas.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/payment", "destination": "/payment.html" },
+    { "source": "/medical", "destination": "/medical.html" },
+    { "source": "/same-day", "destination": "/same-day.html" },
+    { "source": "/environmental", "destination": "/environmental.html" },
+
+    { "source": "/georgia-courier", "destination": "/georgia-courier.html" },
+    { "source": "/atlanta-courier", "destination": "/atlanta-courier.html" },
+    { "source": "/alabama-courier", "destination": "/alabama-courier.html" },
+    { "source": "/tennessee-courier", "destination": "/tennessee-courier.html" },
+    { "source": "/south-carolina-courier", "destination": "/south-carolina-courier.html" },
+    { "source": "/north-carolina-courier", "destination": "/north-carolina-courier.html" },
+    { "source": "/jacksonville-courier", "destination": "/jacksonville-courier.html" }
   ]
 }
