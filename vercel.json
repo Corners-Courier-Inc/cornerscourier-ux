@@ -1,21 +1,26 @@
 {
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+
+    { "source": "/about-us", "destination": "/about", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/services.html", "destination": "/services", "permanent": true },
+    { "source": "/service-areas.html", "destination": "/service-areas", "permanent": true },
+    { "source": "/environmental.html", "destination": "/environmental", "permanent": true },
+    { "source": "/medical.html", "destination": "/medical", "permanent": true },
+    { "source": "/same-day.html", "destination": "/same-day", "permanent": true }
+  ],
+
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/about", "destination": "/about.html" },
+    { "source": "/contact", "destination": "/contact.html" },
     { "source": "/services", "destination": "/services.html" },
     { "source": "/service-areas", "destination": "/service-areas.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/payment", "destination": "/payment.html" },
-    { "source": "/medical", "destination": "/medical.html" },
-    { "source": "/same-day", "destination": "/same-day.html" },
     { "source": "/environmental", "destination": "/environmental.html" },
-
-    { "source": "/georgia-courier", "destination": "/georgia-courier.html" },
-    { "source": "/atlanta-courier", "destination": "/atlanta-courier.html" },
-    { "source": "/alabama-courier", "destination": "/alabama-courier.html" },
-    { "source": "/tennessee-courier", "destination": "/tennessee-courier.html" },
-    { "source": "/south-carolina-courier", "destination": "/south-carolina-courier.html" },
-    { "source": "/north-carolina-courier", "destination": "/north-carolina-courier.html" },
-    { "source": "/jacksonville-courier", "destination": "/jacksonville-courier.html" }
+    { "source": "/medical", "destination": "/medical.html" },
+    { "source": "/same-day", "destination": "/same-day.html" }
   ]
 }
