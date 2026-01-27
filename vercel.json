@@ -21,6 +21,13 @@
     { "source": "/service-areas", "destination": "/service-areas.html" },
     { "source": "/environmental", "destination": "/environmental.html" },
     { "source": "/medical", "destination": "/medical.html" },
-    { "source": "/same-day", "destination": "/same-day.html" }
+    { "source": "/same-day", "destination": "/same-day.html" },
+    { "source": "/alabama-courier", "destination": "/alabama-courier.html" },
+    { "source": "/atlanta-courier", "destination": "/atlanta-courier.html" },
+    { "source": "/georgia-courier", "destination": "/georgia-courier.html" },
+    { "source": "/jacksonville-courier", "destination": "/jacksonville-courier.html" },
+    { "source": "/north-carolina-courier", "destination": "/north-carolina-courier.html" },
+    { "source": "/south-carolina-courier", "destination": "/south-carolina-courier.html" },
+    { "source": "/tennessee-courier", "destination": "/tennessee-courier.html" }
   ]
 }
