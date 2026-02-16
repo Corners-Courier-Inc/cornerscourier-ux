@@ -9,8 +9,22 @@ module.exports = async (req, res) => {
       name, email, phone, service_type, other_service_description,
       dimensions, pickup_street_address, pickup_city, pickup_state, pickup_zip,
       delivery_street_address, delivery_city, delivery_state, delivery_zip,
-      message, distance
+      message, distance, email_address_hp, form_timestamp
     } = req.body;
+
+    // Honeypot check: If the hidden field is filled, it's likely a bot.
+    if (email_address_hp) {
+      console.log("Honeypot triggered for quote form! Bot detected.");
+      return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
+    }
+
+    // Time-based submission check: If the form was submitted too quickly.
+    const submissionTime = Date.now();
+    const minSubmissionTime = 3000; // 3 seconds
+    if (submissionTime - form_timestamp < minSubmissionTime) {
+      console.log("Time-based spam detected for quote form! Form submitted too quickly.");
+      return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
+    }
 
     const brevoApiKey = process.env.BREVO_API_KEY;
     const recipientEmail = process.env.RECIPIENT_EMAIL;
