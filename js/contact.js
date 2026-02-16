@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
+    // Set form timestamp on load
+    const formTimestampField = document.getElementById('form_timestamp');
+    if (formTimestampField) {
+      formTimestampField.value = Date.now();
+    }
+
     contactForm.addEventListener('submit', async (event) => {
       event.preventDefault(); // Prevent default form submission
 
