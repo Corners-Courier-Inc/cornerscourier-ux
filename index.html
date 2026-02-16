@@ -551,6 +551,12 @@ and the Southeast.
           </div>
 
           <div class="text-center">
+            <!-- Honeypot Field -->
+            <input type="text" name="email_address_hp" class="hidden-honeypot" tabindex="-1" autocomplete="off">
+
+            <!-- Timestamp Field -->
+            <input type="hidden" name="form_timestamp" id="form_timestamp_quote">
+
             <button type="submit" class="text-white font-bold py-3 px-8 rounded-full w-full form-submit-button">Submit Quote Request</button>
             <p class="text-xs text-gray-500 mt-3">We never share your information.</p>
           </div>
