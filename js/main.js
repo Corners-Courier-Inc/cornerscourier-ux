@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const quoteForm = document.getElementById('quote-form');
     if (quoteForm) {
+        // Set form timestamp on load
+        const formTimestampField = document.getElementById('form_timestamp_quote');
+        if (formTimestampField) {
+            formTimestampField.value = Date.now();
+        }
 
         // Helper function to geocode an address string using Nominatim
         const geocodeAddress = async (address) => {
