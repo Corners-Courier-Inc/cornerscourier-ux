@@ -245,6 +245,12 @@
 
             <textarea name="message" placeholder="How can we help you? Please include pickup location, delivery destination, and item details if available." rows="6" required class="w-full p-3 mb-6 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500"></textarea>
 
+            <!-- Honeypot Field -->
+            <input type="text" name="email_address_hp" class="hidden-honeypot" tabindex="-1" autocomplete="off">
+
+            <!-- Timestamp Field -->
+            <input type="hidden" name="form_timestamp" id="form_timestamp">
+
             <button type="submit" class="w-full font-bold py-3 px-8 rounded-full common-cta-primary">
               Send Message
             </button>
