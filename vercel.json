@@ -1,0 +1,49 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/about-us", "destination": "/contact", "permanent": true },
+    { "source": "/about-us/", "destination": "/contact", "permanent": true },
+    { "source": "/about.html", "destination": "/contact", "permanent": true },
+    { "source": "/about", "destination": "/contact", "permanent": true },
+    { "source": "/about/", "destination": "/contact", "permanent": true },
+
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+
+    { "source": "/services.html", "destination": "/services", "permanent": true },
+
+    { "source": "/service-area", "destination": "/service-areas", "permanent": true },
+    { "source": "/service-area/", "destination": "/service-areas", "permanent": true },
+    { "source": "/service-areas.html", "destination": "/service-areas", "permanent": true },
+
+
+    { "source": "/medical.html", "destination": "/services#medical", "permanent": true },
+    { "source": "/medical", "destination": "/services#medical", "permanent": true },
+    { "source": "/medical/", "destination": "/services#medical", "permanent": true },
+
+
+    { "source": "/alabama-courier.html", "destination": "/service-areas#alabama", "permanent": true },
+    { "source": "/alabama-courier", "destination": "/service-areas#alabama", "permanent": true },
+    { "source": "/georgia-courier.html", "destination": "/service-areas#georgia", "permanent": true },
+    { "source": "/georgia-courier", "destination": "/service-areas#georgia", "permanent": true },
+    { "source": "/jacksonville-courier.html", "destination": "/service-areas#florida", "permanent": true },
+    { "source": "/jacksonville-courier", "destination": "/service-areas#florida", "permanent": true },
+    { "source": "/north-carolina-courier.html", "destination": "/service-areas#north-carolina", "permanent": true },
+    { "source": "/north-carolina-courier", "destination": "/service-areas#north-carolina", "permanent": true },
+    { "source": "/south-carolina-courier.html", "destination": "/service-areas#south-carolina", "permanent": true },
+    { "source": "/south-carolina-courier", "destination": "/service-areas#south-carolina", "permanent": true },
+    { "source": "/tennessee-courier.html", "destination": "/service-areas#tennessee", "permanent": true },
+    { "source": "/tennessee-courier", "destination": "/service-areas#tennessee", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/service-areas", "destination": "/service-areas.html" },
+    { "source": "/payment", "destination": "/payment.html" },
+    { "source": "/environmental", "destination": "/environmental.html" },
+    { "source": "/same-day", "destination": "/same-day.html" },
+    { "source": "/atlanta-courier", "destination": "/atlanta-courier.html" }
+  ]
+}

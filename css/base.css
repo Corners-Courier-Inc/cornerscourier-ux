@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+:root {
+  --primary-color: #111615; /* Deepest dark forest-black background */
+  --primary-light: #1b2421; /* Dark slate-green panels */
+  --primary-card: rgba(27, 36, 33, 0.65);
+  --accent-color: #116466; /* Deep Teal */
+  --accent-gradient: linear-gradient(135deg, #116466 0%, #d9b08c 100%); /* High-end Teal-to-Bronze metallic gradient */
+  --light-text-color: #d1e8e2; /* Pale sage/mint text */
+  --muted-text-color: #d9b08c; /* Warm tan/bronze text */
+  --dark-text-color: #111615;
+  --border-color: rgba(209, 232, 226, 0.08);
+  --glass-bg: rgba(27, 36, 33, 0.45);
+  --glass-border: rgba(209, 232, 226, 0.06);
+}
+
+/* Base styles */
+body {
+  font-family: 'Urbanist', sans-serif;
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .badge-premium, .cta-button, .header-link {
+  font-family: 'Urbanist', sans-serif;
+  letter-spacing: 0.02em; /* Geometric headings pop with a tiny touch of spacing */
+}
+
+main {
+  flex-grow: 1;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 176, 140, 0.35); /* Warm bronze border glow */
+}
+
+/* Header link & interactive animations */
+.header-link {
+  color: var(--muted-text-color);
+  position: relative;
+  transition: color 0.3s ease;
+  font-size: 1.05rem; /* Increased size for readability */
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.header-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: var(--accent-gradient);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.header-link:hover {
+  color: var(--light-text-color);
+}
+
+.header-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.header-link-active {
+  color: var(--light-text-color);
+  font-weight: 700;
+}
+
+.header-link-active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(1);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: var(--accent-gradient);
+}
+
+/* Standard CTA button styles */
+.cta-button {
+  background: var(--accent-gradient);
+  color: var(--light-text-color);
+  font-weight: 700;
+  box-shadow: 0 4px 14px 0 rgba(17, 100, 102, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #d9b08c 0%, #116466 100%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(17, 100, 102, 0.4);
+}
+
+.cta-button:hover::before {
+  opacity: 1;
+}
+
+.cta-button-secondary {
+  background: transparent;
+  color: var(--light-text-color);
+  border: 1px solid var(--muted-text-color);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cta-button-secondary:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: rgba(17, 100, 102, 0.05);
+}
+
+/* Custom Autocomplete Styling */
+.autocomplete-results {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  background-color: var(--primary-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.autocomplete-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: var(--light-text-color);
+  transition: background-color 0.2s ease;
+}
+
+.autocomplete-item:hover {
+  background-color: rgba(17, 100, 102, 0.15);
+}
+
+/* Honeypot field styling */
+.hidden-honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  height: 1px;
+  width: 1px;
+}
