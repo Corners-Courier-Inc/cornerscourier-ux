@@ -2,6 +2,7 @@ let pickupCoords = null;
 let dropoffCoords = null;
 let pickupAutocomplete = null;
 let dropoffAutocomplete = null;
+let geocoder = null;
 
 // Initialize Google Maps Autocomplete
 function initAutocomplete() {
@@ -9,6 +10,8 @@ function initAutocomplete() {
     console.warn("Google Maps API not yet loaded.");
     return;
   }
+
+  geocoder = new google.maps.Geocoder();
 
   const options = {
     types: ['address'],
@@ -21,12 +24,61 @@ function initAutocomplete() {
   if (pickupStreetInput) {
     pickupAutocomplete = new google.maps.places.Autocomplete(pickupStreetInput, options);
     pickupAutocomplete.addListener('place_changed', () => fillAddressFields(pickupAutocomplete, 'pickup'));
+    
+    pickupStreetInput.addEventListener('input', () => {
+      pickupCoords = null;
+      calculateDistance();
+    });
+    
+    pickupStreetInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!pickupCoords && pickupStreetInput.value) {
+          geocodeAddress(pickupStreetInput.value, 'pickup');
+        }
+      }, 300);
+    });
   }
 
   if (dropoffStreetInput) {
     dropoffAutocomplete = new google.maps.places.Autocomplete(dropoffStreetInput, options);
     dropoffAutocomplete.addListener('place_changed', () => fillAddressFields(dropoffAutocomplete, 'delivery'));
+    
+    dropoffStreetInput.addEventListener('input', () => {
+      dropoffCoords = null;
+      calculateDistance();
+    });
+    
+    dropoffStreetInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!dropoffCoords && dropoffStreetInput.value) {
+          geocodeAddress(dropoffStreetInput.value, 'delivery');
+        }
+      }, 300);
+    });
   }
+}
+
+// Geocode fallback for manual text typing
+function geocodeAddress(addressText, type) {
+  if (!geocoder || !addressText) return;
+  
+  geocoder.geocode({ address: addressText }, (results, status) => {
+    if (status === 'OK' && results[0]) {
+      const location = results[0].geometry.location;
+      const coords = {
+        lat: location.lat(),
+        lon: location.lng()
+      };
+      
+      if (type === 'pickup') {
+        pickupCoords = coords;
+      } else {
+        dropoffCoords = coords;
+      }
+      
+      calculateDistance();
+    }
+  });
 }
 
 // Extract address components from Google Places result and autofill form fields
