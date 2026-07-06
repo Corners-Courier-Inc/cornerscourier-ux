@@ -58,6 +58,11 @@
   box-shadow: 0 0 0 2px rgba(17, 100, 102, 0.2);
 }
 
+.form-input option {
+  background-color: #0f172a; /* Dark slate background */
+  color: #ffffff;            /* White text */
+}
+
 .form-label {
   color: var(--muted-text-color);
   font-weight: 500;
