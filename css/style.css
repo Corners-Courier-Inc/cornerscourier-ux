@@ -63,6 +63,11 @@
   color: #ffffff;            /* White text */
 }
 
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important; /* Faded placeholder text */
+  opacity: 1; /* Firefox default override */
+}
+
 .form-label {
   color: var(--muted-text-color);
   font-weight: 500;
