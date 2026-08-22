@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
               ${other_service_description ? `<p><strong>Other Service Description:</strong> ${other_service_description}</p>` : ''}
               <p><strong>Dimensions:</strong> ${dimensions || 'Not provided'}</p>
               <p><strong>Description:</strong></p>
-              <p>${message.replace(/\n/g, "<br>")}</p>
+              <p>${(message || '').replace(/\n/g, "<br>")}</p>
               <hr>
               <h3>Routing</h3>
               <p>

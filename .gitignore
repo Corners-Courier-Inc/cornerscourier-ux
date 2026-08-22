@@ -5,3 +5,4 @@ node_modules/
 dist/tailwind.css.map
 
 .vercel
+.env*.local

@@ -64,7 +64,7 @@ module.exports = async (req, res) => {
               <hr>
               <p><strong>Subject:</strong> ${subject}</p>
               <p><strong>Message:</strong></p>
-              <p>${message.replace(/\n/g, "<br>")}</p>
+              <p>${(message || '').replace(/\n/g, "<br>")}</p>
             </body>
           </html>
         `,
