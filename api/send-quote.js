@@ -73,8 +73,18 @@ module.exports = async (req, res) => {
               <p>${message.replace(/\n/g, "<br>")}</p>
               <hr>
               <h3>Routing</h3>
-              <p><strong>Pickup Address:</strong><br>${pickupAddress}</p>
-              <p><strong>Delivery Address:</strong><br>${deliveryAddress}</p>
+              <p>
+                <strong>Pickup Address:</strong><br>
+                ${pickup_street_address}<br>
+                ${pickup_apt_suite ? `<strong>Apt/Suite:</strong> ${pickup_apt_suite}<br>` : ''}
+                ${pickup_city}, ${pickup_state} ${pickup_zip}
+              </p>
+              <p>
+                <strong>Delivery Address:</strong><br>
+                ${delivery_street_address}<br>
+                ${delivery_apt_suite ? `<strong>Apt/Suite:</strong> ${delivery_apt_suite}<br>` : ''}
+                ${delivery_city}, ${delivery_state} ${delivery_zip}
+              </p>
               <p><strong>Estimated Distance:</strong> ${distanceText}</p>
             </body>
           </html>
