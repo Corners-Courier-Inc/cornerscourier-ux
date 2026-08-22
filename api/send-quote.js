@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
   try {
     const {
       name, email, phone, service_type, other_service_description,
-      dimensions, pickup_street_address, pickup_city, pickup_state, pickup_zip,
-      delivery_street_address, delivery_city, delivery_state, delivery_zip,
+      dimensions, pickup_street_address, pickup_apt_suite, pickup_city, pickup_state, pickup_zip,
+      delivery_street_address, delivery_apt_suite, delivery_city, delivery_state, delivery_zip,
       message, distance, email_address_hp, form_timestamp
     } = req.body;
 
@@ -37,8 +37,8 @@ module.exports = async (req, res) => {
     }
 
     // Combine address parts
-    const pickupAddress = `${pickup_street_address}, ${pickup_city}, ${pickup_state} ${pickup_zip}`;
-    const deliveryAddress = `${delivery_street_address}, ${delivery_city}, ${delivery_state} ${delivery_zip}`;
+    const pickupAddress = `${pickup_street_address}${pickup_apt_suite ? `, ${pickup_apt_suite}` : ''}, ${pickup_city}, ${pickup_state} ${pickup_zip}`;
+    const deliveryAddress = `${delivery_street_address}${delivery_apt_suite ? `, ${delivery_apt_suite}` : ''}, ${delivery_city}, ${delivery_state} ${delivery_zip}`;
 
     // Format distance text
     const distanceText = !isNaN(parseFloat(distance)) ? `${distance} miles` : distance;

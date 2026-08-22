@@ -410,10 +410,16 @@
           <!-- Pickup Address Section -->
           <div class="p-6 rounded-xl bg-white/5 border border-white/5 space-y-4">
             <h3 class="text-lg font-bold text-white">Pickup Location</h3>
-            <div>
-              <label class="form-label">Street Address (Google Autocomplete)</label>
-              <input type="text" name="pickup_street_address" placeholder="Start typing address..." required
-                autocomplete="off" class="w-full form-input">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div class="md:col-span-3">
+                <label class="form-label">Street Address (Google Autocomplete)</label>
+                <input type="text" name="pickup_street_address" placeholder="Start typing address..." required
+                  autocomplete="off" class="w-full form-input">
+              </div>
+              <div class="md:col-span-1">
+                <label class="form-label">Apt, Suite, etc.</label>
+                <input type="text" name="pickup_apt_suite" placeholder="Apt, Suite, etc." class="w-full form-input">
+              </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4">
               <div>
@@ -434,10 +440,16 @@
           <!-- Delivery Address Section -->
           <div class="p-6 rounded-xl bg-white/5 border border-white/5 space-y-4">
             <h3 class="text-lg font-bold text-white">Delivery Location</h3>
-            <div>
-              <label class="form-label">Street Address (Google Autocomplete)</label>
-              <input type="text" name="delivery_street_address" placeholder="Start typing address..." required
-                autocomplete="off" class="w-full form-input">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div class="md:col-span-3">
+                <label class="form-label">Street Address (Google Autocomplete)</label>
+                <input type="text" name="delivery_street_address" placeholder="Start typing address..." required
+                  autocomplete="off" class="w-full form-input">
+              </div>
+              <div class="md:col-span-1">
+                <label class="form-label">Apt, Suite, etc.</label>
+                <input type="text" name="delivery_apt_suite" placeholder="Apt, Suite, etc." class="w-full form-input">
+              </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4">
               <div>
