@@ -418,7 +418,7 @@
               </div>
               <div class="md:col-span-1">
                 <label class="form-label">Apt, Suite, etc.</label>
-                <input type="text" name="pickup_apt_suite" placeholder="Apt, Suite, etc." class="w-full form-input">
+                <input type="text" name="pickup_apt_suite" placeholder="Apt, Suite, etc." autocomplete="off" class="w-full form-input">
               </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4">
@@ -448,7 +448,7 @@
               </div>
               <div class="md:col-span-1">
                 <label class="form-label">Apt, Suite, etc.</label>
-                <input type="text" name="delivery_apt_suite" placeholder="Apt, Suite, etc." class="w-full form-input">
+                <input type="text" name="delivery_apt_suite" placeholder="Apt, Suite, etc." autocomplete="off" class="w-full form-input">
               </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4">
@@ -481,7 +481,7 @@
 
           <div class="text-center pt-4">
             <!-- Honeypot -->
-            <input type="text" name="email_address_hp" class="hidden-honeypot" tabindex="-1" autocomplete="off">
+            <input type="text" name="website_url_hp" class="hidden-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="form_timestamp" id="form_timestamp_quote">
 
             <button type="submit" class="cta-button w-full py-4 rounded-xl text-base font-bold">

@@ -9,11 +9,11 @@ module.exports = async (req, res) => {
       name, email, phone, service_type, other_service_description,
       dimensions, pickup_street_address, pickup_apt_suite, pickup_city, pickup_state, pickup_zip,
       delivery_street_address, delivery_apt_suite, delivery_city, delivery_state, delivery_zip,
-      message, distance, email_address_hp, form_timestamp
+      message, distance, website_url_hp, form_timestamp
     } = req.body;
 
     // Honeypot check: If the hidden field is filled, it's likely a bot.
-    if (email_address_hp) {
+    if (website_url_hp) {
       console.log("Honeypot triggered for quote form! Bot detected.");
       return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
     }
