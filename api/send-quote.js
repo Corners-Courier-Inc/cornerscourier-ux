@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sender: { name: `${name} (${email})`, email: senderEmail },
+        sender: { name, email: senderEmail },
         to: [{ email: recipientEmail }],
         replyTo: { email, name },
         subject: `New Quote Request-CornersCourier: ${service_type}`,
