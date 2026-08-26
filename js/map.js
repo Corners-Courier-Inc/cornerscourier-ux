@@ -175,7 +175,9 @@ function calculateDistance() {
       Math.sin(dLon / 2) ** 2;
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
+  const straightLine = R * c;
+  // Apply 1.3x circuity factor to approximate actual driving distance
+  const distance = straightLine * 1.3;
 
   distanceDisplay.textContent = distance.toFixed(2);
 }

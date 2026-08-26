@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const dLon = toRad(coords2.lon - coords1.lon);
             const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(coords1.lat)) * Math.cos(toRad(coords2.lat)) * Math.sin(dLon / 2) ** 2;
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return (R * c).toFixed(2);
+            // Apply 1.3x circuity factor to approximate actual driving distance
+            return (R * c * 1.3).toFixed(2);
         };
 
         quoteForm.addEventListener('submit', async (event) => {
