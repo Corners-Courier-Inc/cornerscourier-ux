@@ -72,6 +72,34 @@ document.addEventListener('DOMContentLoaded', function () {
             return (R * c * 1.3).toFixed(2);
         };
 
+        // Helper to calculate driving distance with Distance Matrix or Haversine fallback
+        const getDrivingDistance = async (coords1, coords2) => {
+            if (typeof google !== 'undefined' && google.maps && google.maps.DistanceMatrixService) {
+                try {
+                    const service = new google.maps.DistanceMatrixService();
+                    const result = await new Promise((resolve) => {
+                        service.getDistanceMatrix({
+                            origins: [new google.maps.LatLng(coords1.lat, coords1.lon)],
+                            destinations: [new google.maps.LatLng(coords2.lat, coords2.lon)],
+                            travelMode: google.maps.TravelMode.DRIVING,
+                            unitSystem: google.maps.UnitSystem.IMPERIAL,
+                        }, (response, status) => {
+                            if (status === 'OK' && response?.rows?.[0]?.elements?.[0]?.status === 'OK') {
+                                const miles = (response.rows[0].elements[0].distance.value / 1609.344).toFixed(2);
+                                resolve(miles);
+                            } else {
+                                resolve(null);
+                            }
+                        });
+                    });
+                    if (result) return result;
+                } catch (e) {
+                    console.warn('DistanceMatrix error, falling back to math:', e);
+                }
+            }
+            return calculateHaversineDistance(coords1, coords2);
+        };
+
         quoteForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -95,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 ]);
 
                 if (pickupCoords && dropoffCoords) {
-                    distance = calculateHaversineDistance(pickupCoords, dropoffCoords);
+                    distance = await getDrivingDistance(pickupCoords, dropoffCoords);
                     document.getElementById('distance').textContent = distance;
                 } else {
                     distance = 'Could not calculate';

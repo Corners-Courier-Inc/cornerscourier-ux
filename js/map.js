@@ -153,7 +153,7 @@ function fillAddressFields(autocomplete, type) {
   calculateDistance();
 }
 
-// Calculate distance via Haversine Formula
+// Calculate distance via Google Maps DistanceMatrixService (with Haversine fallback)
 function calculateDistance() {
   const distanceDisplay = document.getElementById('distance');
   if (!distanceDisplay) return;
@@ -163,23 +163,56 @@ function calculateDistance() {
     return;
   }
 
-  const R = 3958.8; // Radius of the Earth in miles
-  const toRad = (value) => (value * Math.PI) / 180;
-  const dLat = toRad(dropoffCoords.lat - pickupCoords.lat);
-  const dLon = toRad(dropoffCoords.lon - pickupCoords.lon);
+  // Primary: Use Google Maps Distance Matrix for exact real-world driving mileage
+  if (typeof google !== 'undefined' && google.maps && google.maps.DistanceMatrixService) {
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [new google.maps.LatLng(pickupCoords.lat, pickupCoords.lon)],
+        destinations: [new google.maps.LatLng(dropoffCoords.lat, dropoffCoords.lon)],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.IMPERIAL,
+      },
+      (response, status) => {
+        if (
+          status === 'OK' &&
+          response &&
+          response.rows &&
+          response.rows[0] &&
+          response.rows[0].elements &&
+          response.rows[0].elements[0] &&
+          response.rows[0].elements[0].status === 'OK'
+        ) {
+          const distanceMeters = response.rows[0].elements[0].distance.value;
+          const miles = (distanceMeters / 1609.344).toFixed(2);
+          distanceDisplay.textContent = miles;
+        } else {
+          fallbackHaversine();
+        }
+      }
+    );
+  } else {
+    fallbackHaversine();
+  }
 
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(pickupCoords.lat)) *
-      Math.cos(toRad(dropoffCoords.lat)) *
-      Math.sin(dLon / 2) ** 2;
+  function fallbackHaversine() {
+    const R = 3958.8; // Radius of the Earth in miles
+    const toRad = (value) => (value * Math.PI) / 180;
+    const dLat = toRad(dropoffCoords.lat - pickupCoords.lat);
+    const dLon = toRad(dropoffCoords.lon - pickupCoords.lon);
 
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const straightLine = R * c;
-  // Apply 1.3x circuity factor to approximate actual driving distance
-  const distance = straightLine * 1.3;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(pickupCoords.lat)) *
+        Math.cos(toRad(dropoffCoords.lat)) *
+        Math.sin(dLon / 2) ** 2;
 
-  distanceDisplay.textContent = distance.toFixed(2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const straightLine = R * c;
+    const distance = straightLine * 1.3;
+
+    distanceDisplay.textContent = distance.toFixed(2);
+  }
 }
 
 // Trigger initialization if Google Maps library is already loaded
