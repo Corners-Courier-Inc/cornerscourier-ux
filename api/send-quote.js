@@ -18,11 +18,11 @@ module.exports = async (req, res) => {
       return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
     }
 
-    // Time-based submission check: If the form was submitted too quickly.
+    // Time-based submission check: If the form was submitted too quickly or missing timestamp.
     const submissionTime = Date.now();
     const minSubmissionTime = 3000; // 3 seconds
-    if (submissionTime - form_timestamp < minSubmissionTime) {
-      console.log("Time-based spam detected for quote form! Form submitted too quickly.");
+    if (!form_timestamp || submissionTime - Number(form_timestamp) < minSubmissionTime) {
+      console.log("Time-based spam detected for quote form! Form submitted too quickly or missing timestamp.");
       return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
     }
 
@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         sender: { name, email: senderEmail },
         to: [{ email: recipientEmail }],
         replyTo: { email, name },
-        subject: `New Quote Request-CornersCourier: ${service_type}`,
+        subject: `New Quote Request - CornersCourier: ${service_type}`,
         htmlContent: `
           <html>
             <body style="font-family: sans-serif; line-height: 1.5;">
