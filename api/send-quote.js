@@ -18,6 +18,16 @@ module.exports = async (req, res) => {
       return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
     }
 
+    // Spam filter check: Cyrillic text or known spam TLDs
+    const cyrillicRegex = /[\u0400-\u04FF]/;
+    const spamDomainRegex = /\.(ru|su|by|top|xyz)$/i;
+    const fullContent = `${name || ''} ${email || ''} ${service_type || ''} ${message || ''}`;
+
+    if (cyrillicRegex.test(fullContent) || spamDomainRegex.test(email || '')) {
+      console.log("Spam detected for quote form via language/domain filter.");
+      return res.status(200).json({ message: "Thanks for your quote request!" }); // Return 200 OK to bots
+    }
+
     // Time-based submission check: If the form was submitted too quickly or missing timestamp.
     const submissionTime = Date.now();
     const minSubmissionTime = 3000; // 3 seconds
